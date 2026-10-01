@@ -12,6 +12,10 @@ __pycache__/
 venv/
 env/
 
+# Secrets
+.env
+.env.*
+
 # Generated Pipeline Directories
 logs/
 outputs/*.json
@@ -20,6 +24,16 @@ outputs/*.csv
 artifacts/
 models/
 mlruns/
+
+# Model files
+*.pkl
+*.joblib
+*.h5
+
+# Packaging
+*.egg-info/
+build/
+dist/
 
 # IDE and Editor files
 .vscode/
