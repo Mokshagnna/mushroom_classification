@@ -1,0 +1,13 @@
+Mushroom MLOps stage status
+
+Implemented:
+- Mushroom-specific stages 01–11, sharing the canonical training and inference package.
+- Prediction/API performance and prediction-distribution monitoring.
+- Categorical data drift, prediction drift, and labeled conditional-shift diagnostics.
+- Reproducible, segregated synthetic drift datasets with explicit synthetic-data notices.
+- Quality-gated retraining comparison that preserves an incumbent with better poisonous recall.
+- FastAPI single/batch serving, Docker Compose, Kubernetes manifests, and guarded deployment.
+
+Generated artifacts are created by stage execution; no empty reports or duplicate
+model binaries are used as structure fillers. Docker image build and Kubernetes
+runtime are not verified when their engines/cluster are unavailable.

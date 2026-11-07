@@ -1,0 +1,36 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Virtual Environments
+.venv/
+venv/
+env/
+
+# Generated Pipeline Directories
+logs/
+outputs/
+artifacts/
+models/
+reports/
+data/processed/
+data/monitoring/
+data/raw/archive/
+mlruns/
+mlflow.db
+deployment/model_metadata.json
+reports/*_report.json
+
+# IDE and Editor files
+.vscode/
+.idea/
+
+# Operating System files
+.DS_Store
+Thumbs.db
+desktop.ini

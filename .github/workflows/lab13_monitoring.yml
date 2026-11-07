@@ -1,0 +1,40 @@
+name: Mushroom Monitoring Checks
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "23 5 * * 1"
+  push:
+    paths:
+      - "src/mushroom_classification/monitoring.py"
+      - "src/mlops_pipeline/12_*.py"
+      - "tests/test_monitoring.py"
+      - ".github/workflows/lab13_monitoring.yml"
+
+jobs:
+  monitoring:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install -r requirements.txt
+      - name: Train saved model for API tests
+        run: python -m src.mushroom_classification train
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -v
+      - name: Generate a reproducible label-free drift control
+        run: python src/mlops_pipeline/12_create_evolved_dataset.py --seed 2026 --rows 1000
+      - name: Compare controlled data distribution
+        run: python src/mlops_pipeline/12_data_drift.py --input data/monitoring/drift/evolved_data.csv
+      - name: Upload monitoring reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mushroom-monitoring-${{ github.run_number }}
+          path: |
+            reports/*drift*.json
+            reports/drift_dataset_metadata.json
+          if-no-files-found: ignore

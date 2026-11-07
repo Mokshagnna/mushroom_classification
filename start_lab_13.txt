@@ -1,0 +1,15 @@
+START LAB 13 — MUSHROOM CLASSIFICATION
+
+From PowerShell at the project root:
+
+  uv run --python 3.12 --with-requirements requirements.txt python -m unittest discover -s tests -v
+  uv run --python 3.12 --with-requirements requirements.txt python -m src.mlops_pipeline.mushroom_classification_pipeline
+  uvicorn api.main:app --host 127.0.0.1 --port 8000
+
+Monitoring:
+  python src/mlops_pipeline/12_prediction_monitoring.py
+  python src/mlops_pipeline/12_api_performance_monitoring.py
+
+Controlled drift data is explicitly synthetic and stored separately from
+data/raw/mushroom.csv. Prediction logs have no labels; they cannot establish
+accuracy or concept drift.

@@ -1,0 +1,36 @@
+name: Mushroom Staged Runner Test
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "src/mlops_pipeline/**"
+      - "src/mushroom_classification/**"
+      - "tests/**"
+      - "config.yaml"
+      - "requirements.txt"
+
+jobs:
+  runner:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install -r requirements.txt
+      - name: Run staged mushroom lifecycle
+        run: python -m src.mlops_pipeline.mushroom_classification_pipeline
+      - name: Verify API and monitoring tests
+        run: python -m unittest discover -s tests -v
+      - name: Upload staged reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mushroom-runner-${{ github.run_number }}
+          path: |
+            artifacts/**
+            reports/**
+            logs/mushroom_classification_pipeline_run_log.json
+          if-no-files-found: ignore

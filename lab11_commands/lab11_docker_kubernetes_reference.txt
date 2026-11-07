@@ -1,0 +1,16 @@
+MUSHROOM CONTAINER AND KUBERNETES REFERENCE
+
+Local container:
+  docker compose config --quiet
+  docker compose up --build
+  docker compose ps
+  docker compose logs mushroom-api
+
+Kubernetes (only after explicit approval):
+  python deployment/deploy_production.py --apply
+  kubectl rollout status deployment/mushroom-classification-api
+
+The API expects the fitted Mushroom Classification pipeline at
+/app/models/mushroom_classifier.joblib and listens on port 8000. Health checks
+use /health and /ready. Never deploy this academic model as a food-safety
+service.

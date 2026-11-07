@@ -1,0 +1,13 @@
+MUSHROOM KUBERNETES COMMANDS (PowerShell)
+
+docker build -t mushroom-classification:latest .
+kubectl apply -f k8s/deployment.yaml
+kubectl apply -f k8s/service.yaml
+kubectl get deployments,services
+kubectl rollout status deployment/mushroom-classification-api
+kubectl port-forward service/mushroom-classification-api 8000:8000
+Invoke-RestMethod http://127.0.0.1:8000/ready
+
+Deployment requires an approved cluster, the image available to that cluster,
+prepared model metadata, and a passing quality gate. No cluster execution is
+claimed by this command reference.

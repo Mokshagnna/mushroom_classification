@@ -1,0 +1,20 @@
+MUSHROOM CLASSIFICATION — LAB 12 MONITORING FLOW
+
+1. Prediction monitoring: src/mlops_pipeline/12_prediction_monitoring.py
+2. API latency/error summary: src/mlops_pipeline/12_api_performance_monitoring.py
+3. Generate label-free controlled feature drift:
+   src/mlops_pipeline/12_create_evolved_dataset.py --seed 2026 --rows 1000
+4. Analyze categorical feature drift:
+   src/mlops_pipeline/12_data_drift.py --input data/monitoring/drift/evolved_data.csv
+5. Create an explicitly synthetic labeled concept-shift control:
+   src/mlops_pipeline/12_create_concept_drift_dataset.py
+6. Conditional feature-distribution comparison requires labeled inputs:
+   src/mlops_pipeline/12_concept_drift.py --baseline data/raw/mushroom.csv --current data/monitoring/drift/evolved_labeled_data.csv
+7. Evaluate real performance only with validated labeled input:
+   src/mlops_pipeline/12_performance_monitoring.py --input <labeled-mushroom.csv>
+8. Trigger reports recommend review only. Retraining must pass the configured
+   gate and incumbent comparison. No automatic production promotion occurs.
+
+Synthetic data and its deliberately perturbed labels are not actual
+observations or reliable ground truth. Never use any result as food-safety
+advice.

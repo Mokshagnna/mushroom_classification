@@ -1,0 +1,12 @@
+Stage 9 — Mushroom batch and HTTP inference
+
+1. Load the complete saved sklearn pipeline configured by paths.model.
+2. Validate every mushroom request against the 22 categorical UCI features.
+3. Keep the original hyphenated dataset names and feature ordering.
+4. Normalize stalk-root '?' using the same inference helper as CSV prediction.
+5. Return prediction code 0=edible or 1=poisonous and both class probabilities.
+6. Log request IDs, predictions, probability, latency, or bounded error codes;
+   never persist full feature records.
+7. Accuracy is only computed by explicit evaluation with supplied ground truth.
+
+Run the API from the project root with: uvicorn api.main:app --port 8000

@@ -1,0 +1,56 @@
+data:
+  raw_path: data/raw/mushroom.csv
+  target_column: class
+  processed_dir: data/processed
+
+split:
+  test_size: 0.2
+  random_state: 42
+
+model:
+  n_estimators: 100
+  random_state: 42
+  cv_folds: 5
+
+quality_gate:
+  metric: poisonous_recall
+  minimum_poisonous_recall: 0.95
+
+mlflow:
+  enabled: true
+  tracking_uri: sqlite:///artifacts/mlflow.db
+  experiment_name: mushroom-classification
+  registry_model_name: Mushroom_Classifier
+
+paths:
+  model: models/mushroom_classifier.joblib
+  preprocessor: models/preprocessor.joblib
+  model_metadata: deployment/model_metadata.json
+  data_validation_report: reports/data_validation_report.json
+  evaluation_report: reports/model_evaluation_report.json
+  quality_gate_report: reports/quality_gate_report.json
+  data_load_report: artifacts/data_load_report.json
+  preprocessing_report: artifacts/preprocessing_summary_report.json
+  preprocessing_validation_report: artifacts/preprocessing_validation_report.json
+  production_model_report: artifacts/production_model_report.json
+  confusion_matrix_plot: artifacts/confusion_matrix.png
+  roc_curve_plot: artifacts/roc_curve.png
+  api_test_report: artifacts/api_test_report.json
+  failure_simulation_report: artifacts/failure_simulation_report.json
+  baseline_validation_csv: artifacts/baseline_validation.csv
+  new_data_validation_csv: artifacts/new_data_validation.csv
+  failure_report: reports/failure_report.json
+  performance_report: reports/performance_report.json
+  lifecycle_report: reports/lifecycle_report.json
+  monitoring_report: reports/prediction_monitoring_report.json
+  drift_report: reports/data_drift_report.json
+
+api:
+  monitoring_log: logs/inference/mushroom_predictions.jsonl
+  host: 0.0.0.0
+  port: 8000
+
+monitoring:
+  data_drift_threshold: 0.15
+  prediction_drift_threshold: 0.15
+  performance_recall_threshold: 0.95
